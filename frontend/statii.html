@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chat-container {
+            height: 80vh;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .chat-messages {
+            height: 65vh;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 18px;
+            max-width: 70%;
+        }
+        .received {
+            background-color: #e9ecef;
+        }
+        .sent {
+            background-color: #0d6efd;
+            color: white;
+            margin-left: auto;
+        }
+        .user-list {
+            height: 65vh;
+            overflow-y: auto;
+        }
+        .timestamp {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+        .online-badge {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #28a745;
+            margin-right: 5px;
+        }
+        .user-item {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .user-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="chat-container">
+                    <div class="chat-header bg-primary text-white p-3 d-flex justify-content-between">
+                        <h5 class="mb-0">Chat: <span id="current-chat">Global</span></h5>
+                        <div id="user-email" class="fw-bold"></div>
+                    </div>
+                    
+                    <div class="chat-messages" id="messages"></div>
+                    
+                    <div class="chat-input p-3 border-top">
+                        <div class="input-group">
+                            <input type="text" id="message-input" class="form-control" placeholder="Scrie un mesaj...">
+                            <button id="send-btn" class="btn btn-primary">Trimite</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <span>Utilizatori online</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="global-chat-toggle" checked>
+                            <label class="form-check-label" for="global-chat-toggle">Chat Global</label>
+                        </div>
+                    </div>
+                    <div class="card-body user-list" id="user-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const messagesContainer = document.getElementById('messages');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const userList = document.getElementById('user-list');
+        const userEmailDisplay = document.getElementById('user-email');
+        const currentChatDisplay = document.getElementById('current-chat');
+        const globalChatToggle = document.getElementById('global-chat-toggle');
+        let currentUser = null;
+        let currentRecipient = 'all';
+        let onlineUsers = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(localStorage.getItem('user'));
+            if (userData) {
+                currentUser = userData;
+                userEmailDisplay.textContent = userData.email;
+                loadChatHistory();
+            } else {
+                window.location.href = '/login';
+            }
+        });
+        async function loadChatHistory() {
+            try {
+                const response = await fetch('/chat/history?limit=100');
+                if (response.ok) {
+                    const messages = await response.json();
+                    messages.forEach(msg => {
+                        displayMessage(msg);
+                    });
+                }
+            } catch (error) {
+                console.error('Eroare la incarcarea mesajelor:', error);
+            }
+        }
+        function displayMessage(msg) {
+            if (currentRecipient === 'all' && msg.recipient !== 'all') {
+                if (msg.sender !== currentUser.id && msg.recipient !== currentUser.id) {
+                    return;
+                }
+            } else if (currentRecipient !== 'all') {
+                if (!((msg.sender === currentUser.id && msg.recipient === currentRecipient) || 
+                      (msg.sender === currentRecipient && msg.recipient === currentUser.id))) {
+                    return;
+                }
+            }
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            const isCurrentUser = msg.sender === currentUser.id;
+            messageElement.classList.add(isCurrentUser ? 'sent' : 'received');
+            const senderName = isCurrentUser ? 'Eu' : msg.sender_email;
+            const timestamp = new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            messageElement.innerHTML = `
+                <strong>${senderName}</strong><br>
+                ${msg.message}
+                <div class="timestamp">${timestamp}</div>
+            `;
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                socket.emit('send_message', {
+                    message: message,
+                    recipient: currentRecipient
+                });
+                messageInput.value = '';
+            }
+        }
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statie Meteo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Statie Meteo</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" id="stations">Statii</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Comunitate</a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <button class="btn btn-outline-primary me-2 loginbtn" type="button">Login</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Statie Meteo</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="weather-card">
+          <h3 class="text-center">Vremea Curenta</h3>
+          <div class="text-center icon">
+            <i class="fas fa-sun"></i>
+          </div>
+          <p class="text-center"><strong>Temperatura:</strong> <span id="temperature">22°C</span></p>
+          <p class="text-center"><strong>Umiditate:</strong> <span id="humidity">60%</span></p>
+          <p class="text-center"><strong>Starea Vremii:</strong> <span id="weather-status">Senin</span></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="weather-card">
+          <h3 class="text-center">Prognoza Pe Termen Scurt</h3>
+          <div id="forecast">
+            <p><strong>Maine:</strong> 23°C, Senin</p>
+            <p><strong>Peste 2 zile:</strong> 25°C, Noros</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <button id="refreshBtn" class="btn btn-primary">Actualizeaza Vremea</button>
+    </div>
+
+    <div id="loggedInMessage" style="display: none; font-size: 20px; color: green; text-align: center; margin-top: 20px;">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

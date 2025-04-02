@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  wind_sensor:
+    build:
+      context: ./wind
+      dockerfile: Dockerfile
+    restart: always
+    devices:
+      - "/dev/gpiomem:/dev/gpiomem"
+    privileged: true
+
+  dht_sensor:
+    build:
+      context: ./temp
+      dockerfile: Dockerfile
+    restart: always
+    devices:
+      - "/dev/gpiomem:/dev/gpiomem"
+    privileged: true
+

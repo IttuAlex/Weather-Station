@@ -1,0 +1,87 @@
+body {
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #343a40;
+    font-size: 36px;
+}
+
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    color: #007bff;
+}
+
+.navbar-nav .nav-link {
+    color: #333 !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #007bff !important;
+}
+
+.navbar-toggler-icon {
+    background-color: #007bff;
+}
+
+.loginbtn{
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.loginbtn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.me-2 {
+    margin-right: 0.5rem !important;
+}
+
+.weather-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.weather-card h3 {
+    color: #007bff;
+}
+
+.icon {
+    font-size: 50px;
+    color: #ffcc00;
+}
+
+button {
+    font-size: 18px;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .weather-card {
+        margin-top: 20px;
+    }
+
+    .navbar {
+        margin-bottom: 10px;
+    }
+
+    .loginbtn {
+        margin-left: 0;
+    }
+}

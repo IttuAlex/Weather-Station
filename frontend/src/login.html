@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f4f4f9;
+    }
+    .card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+    .form-control {
+      background-color: white;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+    .form-control:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    .form-label {
+      color: #555;
+    }
+    .btn-outline-primary {
+      border-color: #007bff;
+      color: #007bff;
+    }
+    .btn-outline-primary:hover {
+      background-color: #007bff;
+      color: white;
+    }
+    .text-muted {
+      color: #6c757d !important;
+    }
+  </style>
+  <script src="script2.js"></script>
+</head>
+<body>
+  <section class="vh-100 d-flex align-items-center">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card">
+            <div class="card-body p-5 text-center">
+
+              <div class="mb-md-5 mt-md-4 pb-5">
+
+                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                <p class="text-muted mb-5">Te rog introdu username si parola</p>
+
+                <div class="form-outline mb-4">
+                  <input type="email" id="typeEmail" class="form-control form-control-lg" />
+                  <label class="form-label" for="typeEmail" id="labelEmail1">Email</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="password" id="typePassword" class="form-control form-control-lg" />
+                  <label class="form-label" for="typePassword" id="labelPassword1">Parola</label>
+                </div>
+
+                <button class="btn btn-outline-primary btn-lg px-5" type="submit" id="loginacces">Login</button>
+
+                <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                  <a href="#!" class="text-muted"><i class="fab fa-facebook-f fa-lg"></i></a>
+                  <a href="#!" class="text-muted"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                  <a href="#!" class="text-muted"><i class="fab fa-google fa-lg"></i></a>
+                </div>
+
+              </div>
+
+              <div>
+                <p class="mb-0">Nu ai cont? <a href="#!" class="text-muted fw-bold" id="singup">Inregistreaza-te</a></p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
